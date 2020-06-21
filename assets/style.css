@@ -3,6 +3,9 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: rgb(56, 56, 56);
+  font-size: 20px;
+  font-family: "Public Sans", sans-serif;
+  font-weight: semi-bold;
 }
 
 /************************** Header **************************/
@@ -25,6 +28,7 @@ header h1 {
   width: 90%;
   margin: 20px 10px;
   border-radius: 0px;
+  font-size: 18px;
 }
 
 .col {
@@ -33,12 +37,12 @@ header h1 {
 
 aside {
   border: 3px rgba(128, 128, 128, 0.856) solid;
-  margin: 15px 5px 0px 5px;
+  margin: 15px 5px 0px 10px;
   height: 85vh;
 }
 
 .historyCity {
-  padding: 10px 10px;
+  padding: 15px 10px 15px 20px;
   border-top: 1px solid grey;
 }
 
@@ -49,7 +53,7 @@ aside {
 }
 
 main {
-  margin: 15px 0px 0px 10px;
+  margin: 15px 0px 0px 20px;
 }
 
 #currentCityDiv {
@@ -62,7 +66,7 @@ main {
 }
 
 .secondaryStyle {
-  font-size: 18px;
+  font-size: 20px;
   padding-right: 10px;
   padding-left: 10px;
   color: rgb(190, 190, 190);
@@ -80,7 +84,6 @@ main {
   width: 60px;
   text-align: center;
   border-radius: 5px;
-  padding: 8px;
   margin-left: 10px;
 }
 .uv-low {
@@ -111,14 +114,31 @@ main {
   padding-top: 10px;
 }
 
+#forecastHeader {
+  width: 100%;
+}
+
+#forecastHeader h1 {
+  font-size: 26px;
+  margin-top: 25px;
+}
+
 .forecastDay {
-  padding: 5px;
-  margin: 20px 5px;
+  padding: 25px 15px;
+  margin: 10px 5px;
   border: rgba(255, 255, 255, 0.5) 1px solid;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(201, 201, 201, 0.4);
+}
+
+.forecastDay #forecastDate {
+  padding-bottom: 5px;
+}
+
+.forecastDay img {
+  margin: 10px 0px;
 }
 
 .forecastDay p {
-  padding-bottom: 5px;
+  padding: 0px;
   margin: 0px;
 }
