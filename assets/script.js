@@ -64,7 +64,7 @@ $( document ).ready(function() {
 
       // var todayWeatherIcon = response.weather[0].icon;
       var currentCityIcon = $("<img src='http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png'/>");
-      var currentCityHeader = $("<div class='center'><h1>" + currentCity + "</h1><span class='secondaryStyle'>" + currentDay + "</span></div>");
+      // var currentCityHeader = $("<div class='center'><h1>" + currentCity + "</h1><span class='secondaryStyle'>" + currentDay + "</span></div>");
       var todayTemp = $("<div class='center'><span class='secondaryStyle'>Temperature:</span>" + response.main.temp + " °C" + "</div>");
       var todayHumidity = $("<div class='center'><span class='secondaryStyle'>Humidity:</span>" + response.main.humidity + " %" + "</div>");
       var todayWindSpeed = $("<div class='center'><span class='secondaryStyle'>Wind Speed:</span>" + response.wind.speed + "m/s" + "</div>");
@@ -72,8 +72,11 @@ $( document ).ready(function() {
       var currentCityLon = response.coord.lon;
 
       // Display today's weather and date for current city to DOM
+      var currentCityHeader = $("<div class='center'>");
+      currentCityHeader.append($("<h1>" + currentCity + "</h1>"));
+      currentCityHeader.append($("<span class='secondaryStyle'>" + currentDay + "</span>"));
+      currentCityHeader.append(currentCityIcon);
       $("#currentCityDiv").append(currentCityHeader);
-      $("#currentCityDiv").append(currentCityIcon);
       $("#currentCityDiv").append(todayTemp);
       $("#currentCityDiv").append(todayHumidity);
       $("#currentCityDiv").append(todayWindSpeed);
@@ -128,9 +131,12 @@ $( document ).ready(function() {
           var forecastTemp = response.list[i].main.temp;
           var forecastHumidity = response.list[i].main.humidity;
 
+          var forecastDayHeader = $("<div id='forecastDayHeader'>");
+          forecastDayHeader.append($("<p class='forecastDate'>" + moment().add(j, 'day').format('D MMM') + "</p>"));
+          forecastDayHeader.append(forecastIcon);
+
           var newForecast = $("<div class='forecastDay'>");
-          newForecast.append($("<p class='forecastDate'>" + moment().add(j, 'day').format('D MMM') + "</p>"));
-          newForecast.append(forecastIcon);
+          newForecast.append(forecastDayHeader);
           newForecast.append($("<p><span class='secondaryStyle'>Temp:  </span>" + Math.round(forecastTemp) + " °C</p>"));
           newForecast.append($("<p><span class='secondaryStyle'>Humidity:  </span>" + forecastHumidity + " %</p>"));
 
@@ -156,18 +162,3 @@ $( document ).ready(function() {
   handleCitySearch();
 
 });
-
-
-  // ``` GIVEN a weather dashboard with form inputs WHEN I search for a city THEN I
-  // am presented with current and future conditions for that city and that city is
-  // added to the search history WHEN I view current weather conditions for that city
-  // THEN I am presented with the city name, the date, an icon representation of
-  // weather conditions, the temperature, the humidity, the wind speed, and the UV
-  // index WHEN I view the UV index THEN I am presented with a color that indicates
-  // whether the conditions are favorable, moderate, or severe WHEN I view future
-  // weather conditions for that city THEN I am presented with a 5-day forecast that
-  // displays the date, an icon representation of weather conditions, the
-  // temperature, and the humidity WHEN I click on a city in the search history THEN
-  // I am again presented with current and future conditions for that city WHEN I
-  // open the weather dashboard THEN I am presented with the last searched city
-  // forecast ```
