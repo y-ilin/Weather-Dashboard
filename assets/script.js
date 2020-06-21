@@ -23,8 +23,16 @@ $( document ).ready(function() {
     }
   }
 
-  $("#searchForm").on("submit", function(event) {
+  // Handle the event for loading data for a new city
+  var handleCitySearch = function(event) {
     event.preventDefault();
+
+    // Grab input for current city search depending on whether it was a submit event or click event
+    if( event.type === "submit" ){
+      var currentCitySearch = event.target.children[0].value;
+    } else if ( event.type === "click" ){
+      var currentCitySearch = event.target.innerHTML;
+    }
 
     // Today's date
     var currentDay = moment().format('dddd, D MMMM YYYY')
@@ -33,27 +41,22 @@ $( document ).ready(function() {
     $("#currentCityDiv").empty();
     $("#forecastDiv").empty();
 
-
-    // Grab form input for current city search
-    var currentCitySearch = $("#searchFormInput")[0].value;
-
     // Run an AJAX call to the OpenWeatherMap API with the relevant parameters for today's weather in the city
     var APIKey = "9959baa3a409f1003d3597e82895e4eb";
     $.ajax({
       url: "https://api.openweathermap.org/data/2.5/weather?q=" + currentCitySearch + "&units=metric&appid=" + APIKey,
       method: "GET",
     }).then(function(response) {
-      console.log(response)
 
       // Grab elements from response
       var currentCity = response.name;
-      console.log(response.weather[0].icon)
+
       // var todayWeatherIcon = response.weather[0].icon;
       var currentCityIcon = $("<img src='http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png'/>");
-      var currentCityHeader = $("<div>" + currentCity + "<span id='todaysDate'>" + currentDay + "</span></div>");
-      var todayTemp = $("<div>" + response.main.temp + " °C" + "</div>");
-      var todayHumidity = $("<div>" + response.main.humidity + "%" + "</div>");
-      var todayWindSpeed = $("<div>" + response.wind.speed + "m/s" + "</div>");
+      var currentCityHeader = $("<div class='center'><h1>" + currentCity + "</h1><span class='secondaryStyle'>" + currentDay + "</span></div>");
+      var todayTemp = $("<div class='center'><span class='secondaryStyle'>Temperature:</span>" + response.main.temp + " °C" + "</div>");
+      var todayHumidity = $("<div class='center'><span class='secondaryStyle'>Humidity:</span>" + response.main.humidity + " %" + "</div>");
+      var todayWindSpeed = $("<div class='center'><span class='secondaryStyle'>Wind Speed:</span>" + response.wind.speed + "m/s" + "</div>");
       var currentCityLat = response.coord.lat;
       var currentCityLon = response.coord.lon;
 
@@ -69,24 +72,24 @@ $( document ).ready(function() {
         url: "http://api.openweathermap.org/data/2.5/uvi?units=metric&appid=" + APIKey + "&lat=" + currentCityLat + "&lon=" + currentCityLon,
         method: "GET",
       }).then(function(response) {
-        var todayUVDiv = $("<div class='uv'>");
-
+        var todayUVSpan = $("<span class='uv'>");
+        $(todayUVSpan).html(response.value);
         // Depending on UV index, add relevant class for styling
         if( response.value < 3){
-          todayUVDiv.addClass("uv-low");
+          todayUVSpan.addClass("uv-low");
         } else if( response.value < 6){
-          todayUVDiv.addClass("uv-moderate");
+          todayUVSpan.addClass("uv-moderate");
         } else if( response.value < 8){
-          todayUVDiv.addClass("uv-high");
+          todayUVSpan.addClass("uv-high");
         } else if( response.value < 11){
-          todayUVDiv.addClass("uv-veryhigh");
+          todayUVSpan.addClass("uv-veryhigh");
         } else if( response.value >= 11){
-          todayUVDiv.addClass("uv-extreme");
+          todayUVSpan.addClass("uv-extreme");
         }
-
         // Display UV index to DOM
-        $(todayUVDiv).html(response.value);
-        $("#currentCityDiv").append($(todayUVDiv));
+        var todayUVDiv = $("<div class='center secondaryStyle'>UV Index:</div>");
+        todayUVDiv.append(todayUVSpan);
+        $("#currentCityDiv").append(todayUVDiv);
 
         // Run function to add submitted city to history array
         historyUpdate(currentCity);
@@ -125,7 +128,15 @@ $( document ).ready(function() {
 
     })
 
-  });
+  };
+
+  // When the search form is submitted, run function for displaying data for searched city
+  $("#searchForm").on("submit", handleCitySearch);
+
+  // When a city from the history list is clicked, run function for displaying data for that city
+  $("#historyDiv").on("click", ".historyCity", handleCitySearch);
+
+
 
 
 });
