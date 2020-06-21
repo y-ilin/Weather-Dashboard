@@ -25,13 +25,24 @@ $( document ).ready(function() {
 
   // Handle the event for loading data for a new city
   var handleCitySearch = function(event) {
-    event.preventDefault();
-
-    // Grab input for current city search depending on whether it was a submit event or click event
-    if( event.type === "submit" ){
-      var currentCitySearch = event.target.children[0].value;
-    } else if ( event.type === "click" ){
-      var currentCitySearch = event.target.innerHTML;
+    // If this was triggered by an event rather than page load,
+    if( event ) {
+      event.preventDefault();
+      // Grab input for current city search depending on whether it was a submit event or click event
+      if( event.type === "submit" ){
+        var currentCitySearch = event.target.children[0].value;
+      } else if ( event.type === "click" ){
+        var currentCitySearch = event.target.innerHTML;
+      }
+      
+    // Else if this is triggered by page load,
+    } else {
+      // Load last searched city if it exists, otherwise load Tokyo
+      if( localStorage.getItem("currentCity") ){
+        var currentCitySearch = localStorage.getItem("currentCity");
+      } else {
+        var currentCitySearch = "Tokyo";
+      }
     }
 
     // Today's date
@@ -95,6 +106,9 @@ $( document ).ready(function() {
         historyUpdate(currentCity);
         });
 
+        // Save last searched city to local storage
+        localStorage.setItem("currentCity", currentCity);
+
     });
 
     // Run an AJAX call to the OpenWeatherMap API with the relevant parameters for the 5-day forecast
@@ -103,6 +117,8 @@ $( document ).ready(function() {
       method: "GET",
     }).then(function(response) {
       // console.log(response);
+      var forecastHeader = $("<div id='forecastHeader'><h1>5-Day Forecast:</h1></div>");
+      $("#forecastDiv").append(forecastHeader);
 
       // Grab temperature and humidity for each day of 5-day forecast
       var j = 1;
@@ -113,10 +129,10 @@ $( document ).ready(function() {
           var forecastHumidity = response.list[i].main.humidity;
 
           var newForecast = $("<div class='forecastDay'>");
-          newForecast.append($("<p>" + moment().add(j, 'day').format('D MMM') + "</p>"));
+          newForecast.append($("<p class='forecastDate'>" + moment().add(j, 'day').format('D MMM') + "</p>"));
           newForecast.append(forecastIcon);
-          newForecast.append($("<p>Temp:  " + Math.round(forecastTemp) + " °C</p>"));
-          newForecast.append($("<p>Humidity:  " + forecastHumidity + " %</p>"));
+          newForecast.append($("<p><span class='secondaryStyle'>Temp:  </span>" + Math.round(forecastTemp) + " °C</p>"));
+          newForecast.append($("<p><span class='secondaryStyle'>Humidity:  </span>" + forecastHumidity + " %</p>"));
 
           // Display each day's data to DOM
           $("#forecastDiv").append($(newForecast));
@@ -136,8 +152,8 @@ $( document ).ready(function() {
   // When a city from the history list is clicked, run function for displaying data for that city
   $("#historyDiv").on("click", ".historyCity", handleCitySearch);
 
-
-
+  // On page load, load initial current city
+  handleCitySearch();
 
 });
 
