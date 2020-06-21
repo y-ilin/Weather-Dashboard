@@ -1,22 +1,78 @@
+body {
+  border-radius: 20px;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(56, 56, 56);
+}
+
+/************************** Header **************************/
 header {
-  border: 1px pink solid;
-  border-radius: 30px;
+  background-color: grey;
+  text-align: center;
+  padding: 10px;
+  color: white;
+}
+
+header h1 {
+  border: 2px grey solid;
+  margin: 0 auto;
+  padding: 5px;
+  width: 385px;
+}
+
+/************************** Search & history sidebar **************************/
+#searchForm input {
+  width: 90%;
+  margin: 20px 10px;
+  border-radius: 0px;
+}
+
+.col {
+  padding: 0px;
 }
 
 aside {
-  border: green 1px solid;
-  border-radius: 30px;
+  border: 3px rgba(128, 128, 128, 0.856) solid;
+  margin: 15px 5px 0px 5px;
+  height: 85vh;
+}
+
+.historyCity {
+  padding: 10px 10px;
+  border-top: 1px solid grey;
+}
+
+/************************** Current city div **************************/
+.row {
+  margin: 0px;
+  color: white;
 }
 
 main {
-  border: blue 1px solid;
-  border-radius: 30px;
+  margin: 15px 0px 0px 10px;
 }
 
-/************************** form **************************/
-#searchForm input {
-  width: 100%;
-  margin-top: 20px;
+#currentCityDiv {
+  font-size: 24px;
+}
+
+#currentCityDiv h1 {
+  border: 3px white solid;
+  padding: 8px 8px 10px 8px;
+}
+
+.secondaryStyle {
+  font-size: 18px;
+  padding-right: 10px;
+  padding-left: 10px;
+  color: rgb(190, 190, 190);
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 /************************** UV **************************/
@@ -24,7 +80,8 @@ main {
   width: 60px;
   text-align: center;
   border-radius: 5px;
-  padding: 10px;
+  padding: 8px;
+  margin-left: 10px;
 }
 .uv-low {
   background-color: green;
@@ -35,6 +92,7 @@ main {
 }
 .uv-high {
   background-color: orange;
+  color: white;
 }
 .uv-veryhigh {
   background-color: red;
@@ -50,4 +108,17 @@ main {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-top: 10px;
+}
+
+.forecastDay {
+  padding: 5px;
+  margin: 20px 5px;
+  border: rgba(255, 255, 255, 0.5) 1px solid;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.forecastDay p {
+  padding-bottom: 5px;
+  margin: 0px;
 }
