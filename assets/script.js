@@ -1,31 +1,65 @@
 $( document ).ready(function() {
-  // On submit of City Search form, grab the city name value
-  
+  // History of searched cities
+  var historyArray = [];
+
+  // Function to update history array
+  var historyUpdate = function(currentCity){
+    if( currentCity !== "" ){
+      // Add current city to history array
+      historyArray.push(currentCity);
+
+      // If history array exceeds 10-item limit, remove the first (oldest) city
+      if( historyArray.length > 10 ){
+        historyArray.shift();
+      }
+      
+      // Empty current display of history array
+      $("#historyDiv").empty();
+
+      // Display each item of current history array
+      historyArray.forEach(function(city) {
+        $("#historyDiv").prepend($(`<div class='historyCity'>${city}</div>`))
+      })
+    }
+  }
+
   $("#searchForm").on("submit", function(event) {
     event.preventDefault();
 
+    // Today's date
+    var currentDay = moment().format('dddd, D MMMM YYYY')
+
+    // Empty existing elements from current city main div and 5-day forecast div
+    $("#currentCityDiv").empty();
+    $("#forecastDiv").empty();
+
+
     // Grab form input for current city search
     var currentCitySearch = $("#searchFormInput")[0].value;
-  
+
     // Run an AJAX call to the OpenWeatherMap API with the relevant parameters for today's weather in the city
     var APIKey = "9959baa3a409f1003d3597e82895e4eb";
     $.ajax({
       url: "https://api.openweathermap.org/data/2.5/weather?q=" + currentCitySearch + "&units=metric&appid=" + APIKey,
       method: "GET",
     }).then(function(response) {
-      console.log(response);
+      console.log(response)
 
-      // Grab elements from response from API: today's weather, temperature, humidity, wind speed
-      var currentCity = $("<div>" + response.name + "</div>");
-      var todayWeatherIcon = response.weather[0].icon;
-      var todayTemp = $("<div>" + response.main.temp + "°C" + "</div>");
+      // Grab elements from response
+      var currentCity = response.name;
+      console.log(response.weather[0].icon)
+      // var todayWeatherIcon = response.weather[0].icon;
+      var currentCityIcon = $("<img src='http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png'/>");
+      var currentCityHeader = $("<div>" + currentCity + "<span id='todaysDate'>" + currentDay + "</span></div>");
+      var todayTemp = $("<div>" + response.main.temp + " °C" + "</div>");
       var todayHumidity = $("<div>" + response.main.humidity + "%" + "</div>");
       var todayWindSpeed = $("<div>" + response.wind.speed + "m/s" + "</div>");
       var currentCityLat = response.coord.lat;
       var currentCityLon = response.coord.lon;
 
-      // Display today's weather for current city to DOM
-      $("#currentCityDiv").append(currentCity);
+      // Display today's weather and date for current city to DOM
+      $("#currentCityDiv").append(currentCityHeader);
+      $("#currentCityDiv").append(currentCityIcon);
       $("#currentCityDiv").append(todayTemp);
       $("#currentCityDiv").append(todayHumidity);
       $("#currentCityDiv").append(todayWindSpeed);
@@ -53,26 +87,46 @@ $( document ).ready(function() {
         // Display UV index to DOM
         $(todayUVDiv).html(response.value);
         $("#currentCityDiv").append($(todayUVDiv));
+
+        // Run function to add submitted city to history array
+        historyUpdate(currentCity);
         });
 
     });
 
-
-
     // Run an AJAX call to the OpenWeatherMap API with the relevant parameters for the 5-day forecast
-    // var queryURLforecast = "https://api.openweathermap.org/data/2.5/forecast?q=" + currentCity + "&units=metric&appid=" + APIKey;
     $.ajax({
       url: "https://api.openweathermap.org/data/2.5/forecast?q=" + currentCitySearch + "&units=metric&appid=" + APIKey,
       method: "GET",
     }).then(function(response) {
-      console.log(response);
+      // console.log(response);
 
-      // Grab elements from response from API: today's weather, temperature, humidity, wind speed, UV index
+      // Grab temperature and humidity for each day of 5-day forecast
+      var j = 1;
+      for( i = 0; i < response.list.length; i++ ){
+        if( (i+1)%8 === 0 ){
+          var forecastIcon = $("<img src='http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + ".png'/>");
+          var forecastTemp = response.list[i].main.temp;
+          var forecastHumidity = response.list[i].main.humidity;
 
-      // if UV index is favorable, display color
+          var newForecast = $("<div class='forecastDay'>");
+          newForecast.append($("<p>" + moment().add(j, 'day').format('D MMM') + "</p>"));
+          newForecast.append(forecastIcon);
+          newForecast.append($("<p>Temp:  " + Math.round(forecastTemp) + " °C</p>"));
+          newForecast.append($("<p>Humidity:  " + forecastHumidity + " %</p>"));
+
+          // Display each day's data to DOM
+          $("#forecastDiv").append($(newForecast));
+          
+          j++;
+        }
+      }
+      // var day1temp = response.list.
 
     })
+
   });
+
 
 });
 

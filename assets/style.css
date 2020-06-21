@@ -44,3 +44,10 @@ main {
   background-color: purple;
   color: white;
 }
+
+/************************** 5-day forecast **************************/
+#forecastDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
