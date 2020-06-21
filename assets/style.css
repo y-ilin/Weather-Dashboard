@@ -57,16 +57,17 @@ main {
 }
 
 #currentCityDiv {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 #currentCityDiv h1 {
+  font-size: 30px;
   border: 3px white solid;
   padding: 8px 8px 10px 8px;
 }
 
 .secondaryStyle {
-  font-size: 18px;
+  font-size: 16px;
   padding-right: 10px;
   padding-left: 10px;
   color: rgb(190, 190, 190);
@@ -119,10 +120,10 @@ main {
 }
 
 #forecastHeader h1 {
-  font-size: 24px;
+  font-size: 20px;
   margin-top: 30px;
   border: 1px white solid;
-  width: 215px;
+  width: 190px;
   padding: 5px;
   text-align: center;
 }
