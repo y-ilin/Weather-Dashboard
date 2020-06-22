@@ -127,7 +127,7 @@ $( document ).ready(function() {
       var j = 1;
       for( i = 0; i < response.list.length; i++ ){
         if( (i+1)%8 === 0 ){
-          var forecastIcon = $("<img src='http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + ".png'/>");
+          var forecastIcon = $("<img src='https://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + ".png'/>");
           var forecastTemp = response.list[i].main.temp;
           var forecastHumidity = response.list[i].main.humidity;
 
