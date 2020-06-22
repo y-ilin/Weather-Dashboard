@@ -83,7 +83,7 @@ $( document ).ready(function() {
 
       // Run an AJAX call to grab current city's UV Index for today
       $.ajax({
-        url: "http://api.openweathermap.org/data/2.5/uvi?units=metric&appid=" + APIKey + "&lat=" + currentCityLat + "&lon=" + currentCityLon,
+        url: "https://api.openweathermap.org/data/2.5/uvi?units=metric&appid=" + APIKey + "&lat=" + currentCityLat + "&lon=" + currentCityLon,
         method: "GET",
       }).then(function(response) {
         var todayUVSpan = $("<span class='uv'>");
