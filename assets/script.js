@@ -63,7 +63,7 @@ $( document ).ready(function() {
       var currentCity = response.name;
 
       // var todayWeatherIcon = response.weather[0].icon;
-      var currentCityIcon = $("<img src='http://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png'/>");
+      var currentCityIcon = $("<img src='https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png'/>");
       // var currentCityHeader = $("<div class='center'><h1>" + currentCity + "</h1><span class='secondaryStyle'>" + currentDay + "</span></div>");
       var todayTemp = $("<div class='center'><span class='secondaryStyle'>Temperature:</span>" + response.main.temp + " °C" + "</div>");
       var todayHumidity = $("<div class='center'><span class='secondaryStyle'>Humidity:</span>" + response.main.humidity + " %" + "</div>");
