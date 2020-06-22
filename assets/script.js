@@ -64,7 +64,6 @@ $( document ).ready(function() {
 
       // var todayWeatherIcon = response.weather[0].icon;
       var currentCityIcon = $("<img src='https://openweathermap.org/img/wn/" + response.weather[0].icon + "@2x.png'/>");
-      // var currentCityHeader = $("<div class='center'><h1>" + currentCity + "</h1><span class='secondaryStyle'>" + currentDay + "</span></div>");
       var todayTemp = $("<div class='center'><span class='secondaryStyle'>Temperature:</span>" + response.main.temp + " °C" + "</div>");
       var todayHumidity = $("<div class='center'><span class='secondaryStyle'>Humidity:</span>" + response.main.humidity + " %" + "</div>");
       var todayWindSpeed = $("<div class='center'><span class='secondaryStyle'>Wind Speed:</span>" + response.wind.speed + "m/s" + "</div>");
@@ -119,7 +118,6 @@ $( document ).ready(function() {
       url: "https://api.openweathermap.org/data/2.5/forecast?q=" + currentCitySearch + "&units=metric&appid=" + APIKey,
       method: "GET",
     }).then(function(response) {
-      // console.log(response);
       var forecastHeader = $("<div id='forecastHeader'><h1>5-Day Forecast:</h1></div>");
       $("#forecastDiv").append(forecastHeader);
 
@@ -146,7 +144,6 @@ $( document ).ready(function() {
           j++;
         }
       }
-      // var day1temp = response.list.
 
     })
 
