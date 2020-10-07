@@ -15,3 +15,6 @@ Licensed under the MIT License.
 
 ## Contributing
 To contribute directly to the code base, please see this [How to Contribute](https://github.com/Microsoft/vscode/wiki/How-to-Contribute) document
+
+## Questions
+If you have any questions or want to have a chat about this project, contact me at yilinlee19@gmail.com or on [LinkedIn](https://www.linkedin.com/in/yi-lin-lee/) 😋
