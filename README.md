@@ -8,7 +8,7 @@ Screenshot of the app:
 ![Assigment Screenshot](./assets/screenshot.png)
 
 ## Usage
-Link to the deployed site: https://y-ilin.github.io/homework6-Weather-Dashboard/
+Link to the deployed site [here](https://y-ilin.github.io/Weather-Dashboard/)
 
 ## License
 Licensed under the MIT License.
